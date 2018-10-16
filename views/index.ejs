@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="margin:20px;">
+<head>
+	<title>Message Board</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+	<h2>Coding Dojo Message Board</h2><br><hr><br>
+		<% if(messages.registration) { %>
+            <% for (var x of messages.Input) { %>
+             <h3><%= x %></h3>
+            <% } %>
+        <% } %>
+
+	<form action="/addnew" method="post" class="form-group">
+		
+		<label>Your Name: </label><br>
+		<input type="text" name="name" class="form-control"></input>
+		<label>Your Message: </label><br>
+		<textarea name="message" class="form-control" rows="4"></textarea><br>
+		<input type="submit" style="float: right;" value="Post Message"></input>
+	</form><br><br>
+
+	<div id="messages">
+		<div id="comments"></div>
+	</div>
+	<% for (var x in messages) { %>
+		<p>Name: <%= messages[x].name %></p>
+		<p>Message: <%= messages[x].message %></p>
+		<% if (messages[x].comments) { %>
+			<% for (z of messages[x].comments) { %>
+				<div style="margin-left: 30px;">
+					<p>Name: <%= z.name %></p>
+					<p>Comment: <%= z.comment %></p>
+				</div>
+			<% } %>
+			<form style="margin-left: 30px;" action="/addnew/<%= messages[x]._id %>" method="post" class="form-group">
+				<label>Name: </label><br>					
+				<input type="text" name="name" class="form-control"></input>
+				<label>Comment: </label><br>
+				<textarea name="comment" class="form-control" rows="4"></textarea><br>
+				<input type="submit" style="float: right;" value="Post Comment"></input>
+			</form><br><br>
+		<% } %>
+	<% } %>
+
+</body>
+</html>
